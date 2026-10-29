@@ -15,7 +15,7 @@ namespace FileNest.Services;
 public static class UsageStats
 {
     /// <summary>The Aptabase App Key ("A-EU-…" or "A-US-…") from the Aptabase dashboard. Empty turns stats off.</summary>
-    public const string AppKey = "";
+    public const string AppKey = "A-EU-7244400846";
 
     private static readonly TimeSpan SessionTimeout = TimeSpan.FromMinutes(60);
     private static readonly Dictionary<string, string> Hosts = new()
