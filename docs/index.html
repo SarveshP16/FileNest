@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FileNest: a tidy Downloads folder for Windows</title>
+  <meta name="description" content="FileNest sorts every finished download into a folder for its type and cleans up installers you no longer need. Free for Windows 10 and 11." />
+  <meta property="og:title" content="FileNest" />
+  <meta property="og:description" content="Your Downloads folder, tidy on its own. Free for Windows 10 and 11." />
+  <meta property="og:image" content="https://sarveshp16.github.io/FileNest/screenshots/overview-dark.png" />
+  <link rel="icon" href="logo.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.40.0/dist/tabler-icons.min.css" />
+  <style>
+    :root {
+      --bg: #f3f3f3; --surface: #ffffff; --line: #e3e3e3; --text: #1b1b1b; --muted: #555;
+      --accent: #0f6e56; --accent-hover: #0d5e4a; --accent-text: #0f6e56; --accent-bg: #e1f5ee;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1c; --surface: #262626; --line: #333; --text: #f5f5f5; --muted: #b8b8b8;
+        --accent: #0f6e56; --accent-hover: #138a6c; --accent-text: #5dcaa5; --accent-bg: #0b3d31;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 16px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    a { color: var(--accent-text); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; color: var(--text); text-decoration: none; }
+    .brand img { width: 32px; height: 32px; }
+    nav a { margin-left: 20px; color: var(--muted); text-decoration: none; font-size: 15px; }
+    nav a:hover { color: var(--text); }
+
+    .hero { text-align: center; padding: 56px 0 32px; }
+    .hero h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.1; margin: 0 0 16px; font-weight: 700; letter-spacing: -0.02em; }
+    .hero p { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+    .buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 8px;
+      font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--surface);
+    }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.primary:hover { background: var(--accent-hover); }
+    .btn i { font-size: 20px; }
+    .note { margin-top: 14px; font-size: 14px; color: var(--muted); }
+
+    .shot { margin: 40px auto 0; max-width: 960px; }
+    .shot img { width: 100%; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0,0,0,.18); display: block; }
+
+    section { padding: 64px 0 8px; }
+    section h2 { font-size: 30px; margin: 0 0 8px; text-align: center; }
+    section .lead { text-align: center; color: var(--muted); margin: 0 auto 36px; max-width: 620px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+    .card i { font-size: 26px; color: var(--accent-text); background: var(--accent-bg); border-radius: 10px; padding: 8px; display: inline-block; }
+    .card h3 { margin: 14px 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .steps { counter-reset: step; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .steps div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+    .steps div::before {
+      counter-increment: step; content: counter(step); display: inline-grid; place-items: center;
+      width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; margin-bottom: 10px;
+    }
+    .steps p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .gallery figure { margin: 0; }
+    .gallery img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+    .gallery figcaption { font-size: 14px; color: var(--muted); margin-top: 8px; text-align: center; }
+
+    .support { text-align: center; background: var(--accent-bg); border-radius: 16px; padding: 40px 20px; margin: 64px 0 0; }
+    .support h2 { margin: 0 0 8px; font-size: 26px; }
+    .support p { color: var(--muted); margin: 0 0 20px; }
+    .kofi { background: #ff5e5b; border-color: #ff5e5b; color: #fff; }
+
+    footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 600px) {
+      nav a:not(.gh) { display: none; }
+      .hero { padding-top: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="#"><img src="logo.png" alt="" />FileNest</a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a class="gh" href="https://github.com/SarveshP16/FileNest">GitHub</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <h1>Your Downloads folder,<br />tidy on its own.</h1>
+      <p>FileNest sits in the Windows tray and moves every finished download into a folder for its type. It also spots installers you no longer need.</p>
+      <div class="buttons">
+        <a class="btn primary" href="https://github.com/SarveshP16/FileNest/releases/latest/download/FileNest-win-Setup.exe"><i class="ti ti-download"></i>Download for Windows</a>
+        <a class="btn" href="https://github.com/SarveshP16/FileNest"><i class="ti ti-brand-github"></i>View source</a>
+      </div>
+      <div class="note">Free · Windows 10 and 11 · Installs without admin rights</div>
+      <div class="shot">
+        <picture>
+          <source srcset="screenshots/overview-dark.png" media="(prefers-color-scheme: dark)" />
+          <img src="screenshots/overview-light.png" alt="FileNest overview showing today's sorted files and folders by type" />
+        </picture>
+      </div>
+    </div>
+
+    <section id="features">
+      <h2>Everything in its nest</h2>
+      <p class="lead">Set it up once and forget about it. FileNest does the filing, and you can undo anything.</p>
+      <div class="grid">
+        <div class="card"><i class="ti ti-folders"></i><h3>Sorts as you download</h3><p>PDFs, images, installers, archives, documents and media each get their own folder.</p></div>
+        <div class="card"><i class="ti ti-clock"></i><h3>Waits for downloads to finish</h3><p>Half-downloaded files are left alone until your browser is done with them.</p></div>
+        <div class="card"><i class="ti ti-arrow-back-up"></i><h3>Undo anything</h3><p>Every move is in Activity. Nothing is overwritten: a second report.pdf becomes report (1).pdf.</p></div>
+        <div class="card"><i class="ti ti-recycle"></i><h3>Cleans up installers</h3><p>Finds setup files for apps you've already installed and moves them to the Recycle Bin.</p></div>
+        <div class="card"><i class="ti ti-adjustments-horizontal"></i><h3>Your own nests</h3><p>Make folders for any file types, with your choice of icon and color.</p></div>
+        <div class="card"><i class="ti ti-sparkles"></i><h3>Feels like Windows</h3><p>Mica or glass window, light and dark themes, seven accents, and quiet updates.</p></div>
+      </div>
+    </section>
+
+    <section id="how">
+      <h2>How it works</h2>
+      <p class="lead">Three steps, and the first two happen once.</p>
+      <div class="steps">
+        <div><strong>Install FileNest</strong><p>Run the installer. It sets itself up for your account and opens.</p></div>
+        <div><strong>Download as usual</strong><p>Keep using your browser like you always do. FileNest watches your Downloads folder from the tray.</p></div>
+        <div><strong>Find things fast</strong><p>Every file lands in its nest, and Organize now tidies what was already there.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Take a look</h2>
+      <p class="lead">Five pages, nothing to learn.</p>
+      <div class="gallery">
+        <figure><img src="screenshots/cleanup.png" alt="Cleanup page listing installers for apps that are already installed" /><figcaption>Cleanup finds installers you no longer need</figcaption></figure>
+        <figure><img src="screenshots/rules.png" alt="Rules page listing every nest and its file types" /><figcaption>Rules: every nest and its file types</figcaption></figure>
+        <figure><img src="screenshots/activity.png" alt="Activity page listing moved files with Undo buttons" /><figcaption>Activity: every move, with Undo</figcaption></figure>
+      </div>
+    </section>
+
+    <div class="support">
+      <h2>Like FileNest?</h2>
+      <p>It's free. If it saves you some tidying, a coffee keeps it going.</p>
+      <a class="btn kofi" href="https://ko-fi.com/crystaxit"><i class="ti ti-coffee"></i>Support on Ko-fi</a>
+    </div>
+
+    <footer>
+      FileNest · <a href="https://github.com/SarveshP16/FileNest/releases">Release notes</a> · <a href="https://github.com/SarveshP16/FileNest/issues">Report a problem</a>
+    </footer>
+  </div>
+</body>
+</html>
