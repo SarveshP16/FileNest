@@ -54,6 +54,7 @@
     section h2 { font-size: 30px; margin: 0 0 8px; text-align: center; }
     section .lead { text-align: center; color: var(--muted); margin: 0 auto 36px; max-width: 620px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
     .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
     .card i { font-size: 26px; color: var(--accent-text); background: var(--accent-bg); border-radius: 10px; padding: 8px; display: inline-block; }
     .card h3 { margin: 14px 0 6px; font-size: 18px; }
@@ -91,6 +92,7 @@
       <a class="brand" href="#"><img src="logo.png" alt="" />FileNest</a>
       <nav>
         <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
         <a href="#how">How it works</a>
         <a class="gh" href="https://github.com/SarveshP16/FileNest">GitHub</a>
       </nav>
@@ -103,7 +105,8 @@
         <a class="btn primary" href="https://github.com/SarveshP16/FileNest/releases/latest/download/FileNest-win-Setup.exe"><i class="ti ti-download"></i>Download for Windows</a>
         <a class="btn" href="https://github.com/SarveshP16/FileNest"><i class="ti ti-brand-github"></i>View source</a>
       </div>
-      <div class="note">Free · Windows 10 and 11 · Installs without admin rights</div>
+      <div class="note">Free and open source · Windows 10 and 11 · Installs without admin rights</div>
+      <div class="note" id="version"><a href="https://github.com/SarveshP16/FileNest/releases/latest">Version 1.0.1</a></div>
       <div class="shot">
         <picture>
           <source srcset="screenshots/overview-dark.png" media="(prefers-color-scheme: dark)" />
@@ -122,6 +125,15 @@
         <div class="card"><i class="ti ti-recycle"></i><h3>Cleans up installers</h3><p>Finds setup files for apps you've already installed and moves them to the Recycle Bin.</p></div>
         <div class="card"><i class="ti ti-adjustments-horizontal"></i><h3>Your own nests</h3><p>Make folders for any file types, with your choice of icon and color.</p></div>
         <div class="card"><i class="ti ti-sparkles"></i><h3>Feels like Windows</h3><p>Mica or glass window, light and dark themes, seven accents, and quiet updates.</p></div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <h2>Private and open</h2>
+      <p class="lead">FileNest works on your PC. Your files stay where they are and are never uploaded anywhere.</p>
+      <div class="grid two">
+        <div class="card"><i class="ti ti-shield-lock"></i><h3>Your files stay yours</h3><p>FileNest only moves files between folders on your PC and never reads what's inside them. To count how many people use it, it sends a few anonymous events: no file names, no folders, nothing that identifies you. One switch in Settings turns that off. <a href="https://github.com/SarveshP16/FileNest#privacy">See exactly what's sent</a>.</p></div>
+        <div class="card"><i class="ti ti-code"></i><h3>Open source</h3><p>Every line of FileNest is public on GitHub under the GPL-3.0 license. Read it, build it yourself, or suggest improvements. <a href="https://github.com/SarveshP16/FileNest">Browse the code</a>.</p></div>
       </div>
     </section>
 
@@ -155,5 +167,17 @@
       FileNest · <a href="https://github.com/SarveshP16/FileNest/releases">Release notes</a> · <a href="https://github.com/SarveshP16/FileNest/issues">Report a problem</a> · <a href="https://github.com/SarveshP16/FileNest#privacy">Privacy</a> · <a href="https://github.com/SarveshP16/FileNest/blob/main/LICENSE">GPL-3.0</a>
     </footer>
   </div>
+  <script>
+    // Show the latest release from GitHub, so the site keeps up with new versions on its own.
+    fetch("https://api.github.com/repos/SarveshP16/FileNest/releases/latest")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(release => {
+        const date = new Date(release.published_at).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+        const link = document.querySelector("#version a");
+        link.textContent = `Version ${release.tag_name.replace(/^v/, "")} · released ${date} · what's new`;
+        link.href = release.html_url;
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>
