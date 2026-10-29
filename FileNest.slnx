@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FileNest.Core/FileNest.Core.csproj" />
+    <Project Path="src/FileNest/FileNest.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FileNest.Tests/FileNest.Tests.csproj" />
+  </Folder>
+</Solution>

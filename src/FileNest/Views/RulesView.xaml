@@ -1,0 +1,106 @@
+<UserControl x:Class="FileNest.Views.RulesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="clr-namespace:FileNest.Ui">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="30,26,30,28">
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource PageTitle}" Text="Rules" />
+                    <TextBlock Style="{StaticResource Secondary}" Margin="0,4,24,0"
+                               Text="Each nest is a folder. A new file goes to the nest whose extension matches the end of its name." />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button Style="{StaticResource SecondaryButton}" Tag="{x:Static ui:Icons.Refresh}" Content="Reset"
+                            Command="{Binding ResetNestsCommand}" Margin="0,0,8,0" ToolTip="Go back to the six default nests" />
+                    <Button Style="{StaticResource AccentButton}" Tag="{x:Static ui:Icons.Plus}" Content="New nest" Command="{Binding AddNestCommand}" />
+                </StackPanel>
+            </Grid>
+
+            <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="1" CornerRadius="10">
+                <ItemsControl ItemsSource="{Binding Nests}" AlternationCount="1000">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border x:Name="row" BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Padding="16,13">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource IconTile}" VerticalAlignment="Top" Background="{Binding IconBackground}">
+                                        <TextBlock Style="{StaticResource Icon}" FontSize="19" Text="{Binding Glyph}" Foreground="{Binding IconForeground}" />
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Margin="14,0,16,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" />
+                                            <TextBlock Style="{StaticResource Muted}" Margin="8,2,0,0" Text="{Binding FolderDisplay, StringFormat=→ {0}}" ToolTip="{Binding FolderPath}" MaxWidth="420" />
+                                        </StackPanel>
+                                        <ItemsControl ItemsSource="{Binding Extensions}" Margin="0,4,0,0">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Background="{DynamicResource Surface1Brush}" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1"
+                                                            CornerRadius="4" Padding="6,1,6,2" Margin="0,3,5,0">
+                                                        <TextBlock Text="{Binding}" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding Enabled}" Margin="0,0,10,0"
+                                                  ToolTip="Sort files into this nest" />
+                                        <Button Style="{StaticResource IconButton}" Content="{x:Static ui:Icons.FolderOpen}" ToolTip="Open folder"
+                                                Command="{Binding DataContext.OpenNestCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                        <Button Style="{StaticResource IconButton}" Content="{x:Static ui:Icons.Pencil}" ToolTip="Edit"
+                                                Command="{Binding DataContext.EditNestCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                        <Button Style="{StaticResource IconButton}" Content="{x:Static ui:Icons.Trash}" ToolTip="Delete"
+                                                Command="{Binding DataContext.DeleteNestCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=(ItemsControl.AlternationIndex), RelativeSource={RelativeSource AncestorType=ContentPresenter}}" Value="0">
+                                    <Setter TargetName="row" Property="BorderThickness" Value="0" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+            <TextBlock Style="{StaticResource Secondary}" Margin="2,10,0,0" HorizontalAlignment="Center"
+                       Text="No nests yet. Add one to start sorting."
+                       Visibility="{Binding Nests.Count, Converter={StaticResource EmptyToVisible}}" />
+
+            <!-- Unmatched files -->
+            <Border Style="{StaticResource Card}" Margin="0,16,0,0" Padding="16,13">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource IconTile}" Background="{DynamicResource Surface1Brush}">
+                        <TextBlock Style="{StaticResource Icon}" FontSize="19" Text="{x:Static ui:Icons.Dots}" Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="14,0,16,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding UnmatchedFolderName}" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock Style="{StaticResource Secondary}" Margin="0,2,0,0">
+                            <Run Text="Files that match no nest go to the" /> <Run Text="{Binding UnmatchedFolderName, Mode=OneWay}" /> <Run Text="folder. Turn this off to leave them where they are." />
+                        </TextBlock>
+                    </StackPanel>
+                    <CheckBox Grid.Column="2" Style="{StaticResource ToggleSwitch}" IsChecked="{Binding SortUnmatched}" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

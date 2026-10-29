@@ -1,0 +1,50 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Row for a file that's still downloading. -->
+    <DataTemplate x:Key="DownloadRow">
+        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Padding="0,11" ToolTip="{Binding SizeText}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="34" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Width="34" Height="34" CornerRadius="8" Background="{Binding IconBackground}">
+                    <TextBlock Style="{StaticResource Icon}" Text="{Binding Glyph}" Foreground="{Binding IconForeground}" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource Body}" Text="{Binding Name}" />
+                    <ProgressBar Style="{StaticResource ThinProgress}" IsIndeterminate="True" Margin="0,7,0,0" MaxWidth="320" HorizontalAlignment="Left" Width="320" />
+                </StackPanel>
+                <Border Grid.Column="2" Style="{StaticResource Pill}" Background="{Binding PillBackground}">
+                    <TextBlock Text="Waiting" FontSize="12" Foreground="{Binding PillForeground}" />
+                </Border>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <!-- Compact row used on Overview. -->
+    <DataTemplate x:Key="RecentRow">
+        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,1,0,0" Padding="0,11" ToolTip="{Binding ToolTipText}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="34" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Width="34" Height="34" CornerRadius="8" Background="{Binding IconBackground}">
+                    <TextBlock Style="{StaticResource Icon}" Text="{Binding Glyph}" Foreground="{Binding IconForeground}" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource Body}" Text="{Binding FileName}" />
+                    <TextBlock Style="{StaticResource Muted}" Text="{Binding Summary}" Margin="0,2,0,0" />
+                </StackPanel>
+                <Border Grid.Column="2" Style="{StaticResource Pill}" Background="{Binding PillBackground}">
+                    <TextBlock Text="{Binding StatusText}" FontSize="12" Foreground="{Binding PillForeground}" />
+                </Border>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>
