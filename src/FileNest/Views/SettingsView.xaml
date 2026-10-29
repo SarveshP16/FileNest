@@ -45,6 +45,19 @@
                             <CheckBox Style="{StaticResource ToggleSwitch}" HorizontalAlignment="Right" IsChecked="{Binding CloseToTray}" />
                         </Grid>
                     </Border>
+                    <Border Style="{StaticResource SettingRow}">
+                        <Grid>
+                            <StackPanel Margin="0,0,60,0">
+                                <TextBlock Style="{StaticResource Body}" Text="Share anonymous usage stats" />
+                                <TextBlock Style="{StaticResource Secondary}" Margin="0,2,0,0"
+                                           Text="Helps the developer see how many people use FileNest: the app version, Windows version and language. Never your files, folders or anything that identifies you." />
+                                <Button Style="{StaticResource LinkButton}" HorizontalAlignment="Left" Margin="-4,2,0,0" Content="What's sent"
+                                        Command="{Binding OpenPrivacyCommand}" />
+                            </StackPanel>
+                            <CheckBox Style="{StaticResource ToggleSwitch}" HorizontalAlignment="Right" IsChecked="{Binding UsageStatsEnabled}"
+                                      AutomationProperties.Name="Share anonymous usage stats" />
+                        </Grid>
+                    </Border>
                 </StackPanel>
             </Border>
 

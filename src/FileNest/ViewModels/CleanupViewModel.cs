@@ -243,6 +243,8 @@ public sealed partial class CleanupViewModel : ObservableObject
         OnPropertyChanged(nameof(HasItems));
         OnPropertyChanged(nameof(Summary));
         if (moved > 0)
+            UsageStats.Track("installers_recycled", new() { ["count"] = moved, ["mb"] = (int)(freed / 1_048_576) });
+        if (moved > 0)
             _toast(new ToastRequest($"Moved {moved} {(moved == 1 ? "installer" : "installers")} to the Recycle Bin · {Format.Size(freed)} freed"));
         if (failed.Count > 0)
             _dialogs.Info("Some installers weren't moved", $"These are in use or protected: {string.Join(", ", failed)}");

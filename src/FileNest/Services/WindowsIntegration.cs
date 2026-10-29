@@ -30,6 +30,9 @@ public static class WindowsIntegration
         Process.Start(new ProcessStartInfo("explorer.exe", $"\"{folder}\"") { UseShellExecute = true });
     }
 
+    /// <summary>Opens a web page in the default browser.</summary>
+    public static void OpenUrl(string url) => Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+
     /// <summary>Opens Explorer with the file selected, or the folder if the file is gone.</summary>
     public static void ShowInExplorer(string path)
     {

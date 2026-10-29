@@ -14,6 +14,7 @@ PDFs, images, installers, archives, documents and media. It also spots installer
 [![Build](https://img.shields.io/github/actions/workflow/status/SarveshP16/FileNest/ci.yml?branch=main&label=build)](https://github.com/SarveshP16/FileNest/actions/workflows/ci.yml)
 ![Windows 10 and 11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)
 ![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet)
+[![License: GPL-3.0](https://img.shields.io/github/license/SarveshP16/FileNest?color=0F6E56)](LICENSE)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-support-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/crystaxit)
 
 [**Download FileNest**](https://github.com/SarveshP16/FileNest/releases/latest/download/FileNest-win-Setup.exe) ·
@@ -115,10 +116,36 @@ Installed copies pick it up within six hours.
 | `build-installer.ps1` | Installer build and release script |
 | `tools/make-icon.cs` | Regenerates the app icon (`dotnet run tools/make-icon.cs`) |
 
+## Privacy
+
+FileNest works entirely on your PC. Your files never leave it, and FileNest doesn't read their contents.
+
+To help count how many people use FileNest, it sends a few anonymous events to
+[Aptabase](https://aptabase.com), a privacy-first analytics service for apps:
+
+| Event | Sent when | Extra detail |
+|---|---|---|
+| `first_launch` | FileNest runs for the first time | none |
+| `app_started` | FileNest starts | whether it started at sign-in |
+| `daily_active` | once a day while it's running | none |
+| `organize_now` | you use Organize now | how many files were moved |
+| `nest_added` | you make a new nest | none |
+| `installers_recycled` | Cleanup moves installers to the Recycle Bin | how many, and the size in MB |
+| `update_downloaded` | an update is downloaded | the new version number |
+
+Every event also includes the FileNest version, Windows version and display language. Events never include file
+or folder names, your user name, or any ID that follows you over time. To turn this off, switch off
+**Settings → General → Share anonymous usage stats**, and nothing is sent.
+
 ## Support
 
 If FileNest saves you some tidying, you can [buy me a coffee on Ko-fi](https://ko-fi.com/crystaxit).
 Bug reports and ideas are welcome in [Issues](https://github.com/SarveshP16/FileNest/issues).
+
+## License
+
+FileNest is free software: you can redistribute it and/or modify it under the terms of the
+[GNU General Public License v3.0](LICENSE). Copyright (C) 2026 Sarvesh Pandit.
 
 ## Credits
 

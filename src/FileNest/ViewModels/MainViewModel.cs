@@ -168,6 +168,7 @@ public sealed partial class MainViewModel : ObservableObject
         try
         {
             var moved = await _watcher.OrganizeNowAsync();
+            UsageStats.Track("organize_now", new() { ["files"] = moved });
             ToastRequested?.Invoke(new ToastRequest(moved == 1 ? "Organized 1 file" : $"Organized {Format.Count(moved)} files"));
         }
         finally
@@ -277,6 +278,7 @@ public sealed partial class MainViewModel : ObservableObject
         _settings.Rules.Add(rule);
         Save();
         RebuildNests();
+        UsageStats.Track("nest_added");
     }
 
     [RelayCommand]
@@ -537,6 +539,20 @@ public sealed partial class MainViewModel : ObservableObject
             Save();
         }
     }
+
+    public bool UsageStatsEnabled
+    {
+        get => _settings.UsageStats;
+        set
+        {
+            _settings.UsageStats = value;
+            OnPropertyChanged();
+            Save();
+        }
+    }
+
+    [RelayCommand]
+    private void OpenPrivacy() => WindowsIntegration.OpenUrl("https://github.com/SarveshP16/FileNest#privacy");
 
     public bool CloseToTray
     {

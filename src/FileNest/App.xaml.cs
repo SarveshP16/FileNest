@@ -51,6 +51,7 @@ public partial class App : Application
         if (Environment.GetEnvironmentVariable("FILENEST_DATA") is { Length: > 0 } dataFolder)
             JsonStore.DataFolder = dataFolder;
 
+        var firstLaunch = !File.Exists(Path.Combine(JsonStore.DataFolder, MainViewModel.SettingsFile));
         _settings = JsonStore.Load(MainViewModel.SettingsFile, () => new AppSettings());
         if (string.IsNullOrWhiteSpace(_settings.WatchFolder))
             _settings.WatchFolder = KnownFolders.Downloads;
@@ -97,7 +98,16 @@ public partial class App : Application
         _vm.Updates.Start();
         StartCleanupChecks();
 
-        if (!e.Args.Contains("--minimized", StringComparer.OrdinalIgnoreCase))
+        var minimized = e.Args.Contains("--minimized", StringComparer.OrdinalIgnoreCase);
+        UsageStats.Start(() => _settings.UsageStats, testRun: Environment.GetEnvironmentVariable("FILENEST_DATA") is { Length: > 0 });
+        if (firstLaunch)
+        {
+            _vm.Save(); // so the next start isn't counted as a first launch again
+            UsageStats.Track("first_launch");
+        }
+        UsageStats.Track("app_started", new() { ["via"] = minimized ? "sign_in" : "opened" });
+
+        if (!minimized)
             _window.Show();
     }
 

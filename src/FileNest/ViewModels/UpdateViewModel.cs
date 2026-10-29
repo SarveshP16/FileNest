@@ -183,6 +183,7 @@ public sealed partial class UpdateViewModel : ObservableObject
             await _updater.DownloadAsync(_update, p => System.Windows.Application.Current.Dispatcher.BeginInvoke(() => Progress = p));
             _downloaded = _update.TargetFullRelease;
             State = Ready;
+            UsageStats.Track("update_downloaded", new() { ["to"] = NewVersion });
             if (announce)
                 _toast(new ToastRequest($"FileNest {NewVersion} is ready", "Restart", RestartNow));
         }

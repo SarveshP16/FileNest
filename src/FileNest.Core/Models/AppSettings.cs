@@ -55,6 +55,9 @@ public sealed class AppSettings
     /// <summary>Download new versions in the background and install them on the next restart.</summary>
     public bool AutoUpdate { get; set; } = true;
 
+    /// <summary>Send anonymous usage counts (see UsageStats in the app). On by default, with a switch in Settings.</summary>
+    public bool UsageStats { get; set; } = true;
+
     public string EffectiveDestinationRoot =>
         string.IsNullOrWhiteSpace(DestinationRoot) ? WatchFolder : DestinationRoot;
 }

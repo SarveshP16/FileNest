@@ -17,6 +17,7 @@
     <StartupObject>FileNest.Program</StartupObject>
     <Company>FileNest</Company>
     <Description>Keeps your Downloads folder tidy.</Description>
+    <Copyright>Copyright (C) 2026 Sarvesh Pandit. Licensed under GPL-3.0.</Copyright>
     <!-- WPF takes per-monitor DPI from app.manifest; the WinForms-only alternative does not apply. -->
     <NoWarn>$(NoWarn);WFO0003</NoWarn>
   </PropertyGroup>
